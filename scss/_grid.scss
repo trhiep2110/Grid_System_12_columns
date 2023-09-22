@@ -1,0 +1,49 @@
+// Breakpoints, dimension, container, row, columns, v.v
+
+$grid-breakpoints: (
+    xs: 0,
+    sm: 576px,
+    md: 768px,
+    lg: 992px,
+    xl: 1200px,
+    xxl: 1400px,
+);
+
+$container-max-widths: (
+    sm: 540px,
+    md: 720px,
+    lg: 960px,
+    xl: 1140px,
+    xxl: 1320px,
+);
+
+$grid-columns: 12;
+$grid-gutter-width: 30px;
+
+.container-fluid {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: $grid-gutter-width * 0.5;
+    padding-right: $grid-gutter-width * 0.5;
+}
+
+.container {
+    @extend .container-fluid;
+}
+
+@mixin make-media-query($dimension) {
+    @media (min-width: $dimension) {
+        @content;
+    }
+}
+
+@each $breakpoint, $dimension in $grid-breakpoints {
+    $max-width: map-get($container-max-widths, $breakpoint);
+
+    @include make-media-query($dimension) {
+        .container {
+            max-width: $max-width;
+        }
+    }
+}
